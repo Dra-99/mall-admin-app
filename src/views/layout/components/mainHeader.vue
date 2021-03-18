@@ -9,14 +9,14 @@
     </a-button>
     <div class="breadcrumb">
       <a-breadcrumb>
-        <a-breadcrumb-item><a href="">用户</a></a-breadcrumb-item>
-        <a-breadcrumb-item>关于</a-breadcrumb-item>
+        <a-breadcrumb-item><a href="">商品</a></a-breadcrumb-item>
+        <a-breadcrumb-item>商品列表</a-breadcrumb-item>
       </a-breadcrumb>
     </div>
     <div class="user-info">
       <ul>
         <li>
-          用户信息
+          {{ $store.state.userInfo.username }}
           <a-icon type="down" />
         </li>
         <li>退出</li>
