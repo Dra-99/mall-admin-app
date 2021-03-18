@@ -1,84 +1,26 @@
 <template>
   <div class="home">
-    <div class="menu-list">
-      <a-menu
-        :default-selected-keys="['1']"
-        :default-open-keys="['sub1']"
-        mode="inline"
-        theme="dark"
-        :inline-collapsed="collapsed"
-      >
-        <a-menu-item key="1">
-          <a-icon type="pie-chart" />
-          <span>Option 1</span>
-        </a-menu-item>
-        <a-menu-item key="2">
-          <a-icon type="desktop" />
-          <span>Option 2</span>
-        </a-menu-item>
-        <a-menu-item key="3">
-          <a-icon type="inbox" />
-          <span>Option 3</span>
-        </a-menu-item>
-        <a-sub-menu key="sub1">
-          <span slot="title"
-            ><a-icon type="mail" /><span>Navigation One</span></span
-          >
-          <a-menu-item key="5"> Option 5 </a-menu-item>
-          <a-menu-item key="6"> Option 6 </a-menu-item>
-          <a-menu-item key="7"> Option 7 </a-menu-item>
-          <a-menu-item key="8"> Option 8 </a-menu-item>
-        </a-sub-menu>
-        <a-sub-menu key="sub2">
-          <span slot="title"
-            ><a-icon type="appstore" /><span>Navigation Two</span></span
-          >
-          <a-menu-item key="9"> Option 9 </a-menu-item>
-          <a-menu-item key="10"> Option 10 </a-menu-item>
-          <a-sub-menu key="sub3" title="Submenu">
-            <a-menu-item key="11"> Option 11 </a-menu-item>
-            <a-menu-item key="12"> Option 12 </a-menu-item>
-          </a-sub-menu>
-        </a-sub-menu>
-      </a-menu>
-    </div>
-    <div class="main-app" :class="{ 'menu-unfold': collapsed }">
-      <a-button
-        type="primary"
-        style="margin-bottom: 16px"
-        @click="toggleCollapsed"
-      >
-        <a-icon :type="collapsed ? 'menu-unfold' : 'menu-fold'" />
-      </a-button>
-      <div class="breadcrumb">
-        <a-breadcrumb>
-          <a-breadcrumb-item><a href="">用户</a></a-breadcrumb-item>
-          <a-breadcrumb-item>关于</a-breadcrumb-item>
-        </a-breadcrumb>
-      </div>
-      <div class="user-info">
-        <ul>
-          <li>用户信息
-            <a-icon type="down" />
-          </li>
-          <li>退出</li>
-        </ul>
-      </div>
+    <!-- 我可以直接从这个父组件中进行赋值，入下 -->
+    <menu-list></menu-list>
+     <!-- <menu-list></menu-list> -->
+    <div class="main-app" :class="{ 'menu-unfold': $store.state.collapsed }">
+      <main-header></main-header>
     </div>
   </div>
 </template>
 
 <script>
+import MainHeader from './components/mainHeader.vue';
+import MenuList from './components/menuList.vue';
+
 export default {
+  components: {
+    MainHeader,
+    MenuList,
+  },
   data() {
     return {
-      collapsed: false,
     };
-  },
-  methods: {
-    toggleCollapsed() {
-      this.collapsed = !this.collapsed;
-    },
   },
 };
 </script>
