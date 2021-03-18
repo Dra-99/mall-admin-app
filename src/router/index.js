@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/layout/Home.vue';
+// 在组件中使用store不需要引用
+import store from '../store';
 // import Login from '../views/layout/Login.vue'
 
 Vue.use(VueRouter);
@@ -30,4 +32,13 @@ const router = new VueRouter({
   routes,
 });
 
+router.beforeEach((to, from, next) => {
+  if (to.path !== '/login') {
+    if (store.state.userInfo.username && store.state.userInfo.appkey && store.state.userInfo.role) {
+      return next();
+    }
+    return next('/login');
+  }
+  return next();
+});
 export default router;
