@@ -8,6 +8,8 @@ export default new Vuex.Store({
   state: {
     collapsed: false,
     userInfo: getCookie(),
+    // 存储筛选出来的符合角色的路由
+    menuRoutes: [],
   },
   mutations: {
     changeCollapsed(state) {
@@ -24,6 +26,9 @@ export default new Vuex.Store({
         role: '',
       };
     },
+    changeMenuList(state, routes) {
+      state.menuRoutes = routes;
+    },
   },
   actions: {
     changeCollapsed({ commit }) {
@@ -36,6 +41,9 @@ export default new Vuex.Store({
     removeUserInfo({ commit }) {
       commit('removeUserInfo');
       removeCookie();
+    },
+    changeMenuList({ commit }, routes) {
+      commit('changeMenuList', routes);
     },
   },
   modules: {
