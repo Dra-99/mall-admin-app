@@ -15,6 +15,8 @@ const asyncRouters = [{
   name: 'Product',
   meta: {
     title: '商品',
+    hidden: false,
+    icon: 'taobao',
   },
   component: Home,
   children: [
@@ -23,6 +25,8 @@ const asyncRouters = [{
       name: 'ProductList',
       meta: {
         title: '商品列表',
+        hidden: false,
+        icon: 'unordered-list',
       },
       component: () => import('../views/layout/page/productList.vue'),
     },
@@ -31,6 +35,8 @@ const asyncRouters = [{
       name: 'ProductAdd',
       meta: {
         title: '新增商品',
+        hidden: false,
+        icon: 'arrow-up',
       },
       component: () => import('../views/layout/page/productAdd.vue'),
     },
@@ -39,6 +45,8 @@ const asyncRouters = [{
       name: 'DiyList',
       meta: {
         title: '定义类目',
+        hidden: false,
+        icon: 'codepen',
       },
       component: () => import('../views/layout/page/diyList.vue'),
     },
@@ -52,12 +60,16 @@ const routes = [
     component: Home,
     meta: {
       title: '首页',
+      hidden: false,
+      icon: 'home',
     },
     children: [
       {
         path: '/index',
         meta: {
           title: '统计',
+          hidden: false,
+          icon: 'line-chart',
         },
         name: 'Index',
         component: () => import('../views/layout/page/index.vue'),
@@ -69,6 +81,7 @@ const routes = [
     name: 'Login',
     meta: {
       title: '登录',
+      hidden: true,
     },
     component: () => import(/* webpackChunkName: "login" */ '../views/layout/Login.vue'),
   },
@@ -86,8 +99,11 @@ router.beforeEach((to, from, next) => {
       // console.log(menuRender);
       if (!isBoolean) {
         const menuRender = getUseRoutes(store.state.userInfo.role, asyncRouters);
-        router.addRoutes(menuRender);
-        store.dispatch('changeMenuList', routes.concat(menuRender));
+
+        store.dispatch('changeMenuList', routes.concat(menuRender)).then(() => {
+          next();
+          router.addRoutes(menuRender);
+        });
         isBoolean = true;
       }
       return next();
