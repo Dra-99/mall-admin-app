@@ -8,9 +8,15 @@
       <a-icon :type="$store.state.collapsed ? 'menu-unfold' : 'menu-fold'" />
     </a-button>
     <div class="breadcrumb">
-      <a-breadcrumb>
-        <a-breadcrumb-item><a href="">商品</a></a-breadcrumb-item>
-        <a-breadcrumb-item>商品列表</a-breadcrumb-item>
+      <a-breadcrumb v-if="currentRoutes.length > 1">
+        <a-breadcrumb-item>
+          {{ currentRoutes[0] ? currentRoutes[0].meta.title : '' }}
+        </a-breadcrumb-item>
+        <a-breadcrumb-item>
+          <router-link :to="{name: currentRoutes[1].name}">
+            {{ currentRoutes[1] ? currentRoutes[1].meta.title : '' }}
+          </router-link>
+        </a-breadcrumb-item>
       </a-breadcrumb>
     </div>
     <div class="user-info">
@@ -29,7 +35,13 @@
 export default {
   data() {
     return {
+      currentRoutes: this.$router.currentRoute.matched,
     };
+  },
+  watch: {
+    $route() {
+      this.currentRoutes = this.$router.currentRoute.matched;
+    },
   },
   methods: {
     toggleCollapsed() {
