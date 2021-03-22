@@ -1,4 +1,5 @@
 import axios from 'axios';
+import store from '@/store';
 
 const instance = axios.create({
   baseURL: 'https://mallapi.duyiedu.com',
@@ -6,7 +7,18 @@ const instance = axios.create({
 
 instance.interceptors.request.use((config) => {
   console.log(config);
-  return config;
+  // 判断一下，如果url地址中包含passport字段，说明这次请求和用户登录相关
+  if (config.url.includes('/passport')) {
+    return config;
+  }
+  // 这里我们获取appkey
+  return {
+    ...config,
+    params: {
+      ...config.params,
+      appkey: store.state.userInfo.appkey,
+    },
+  };
 }, (error) => Promise.reject(error));
 
 instance.interceptors.response.use((response) => {
